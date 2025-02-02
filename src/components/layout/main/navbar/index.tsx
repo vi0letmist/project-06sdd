@@ -2,13 +2,15 @@ import Link from "next/link";
 
 const menuList = [
   { name: "home", destination: "/" },
-  { name: "about", destination: "/about" },
+  { name: "books", destination: "/books" },
+  { name: "borrow records", destination: "/borrow-records" },
+  { name: "bookmarks", destination: "/bookmarks" },
 ];
 
 const Navbar = () => {
   return (
     <nav className="flex">
-      <ul className="font-medium md:flex md:flex-row md:space-y-0 space-y-2">
+      <ul className="font-medium md:flex md:flex-col md:space-y-0 space-y-2">
         {menuList.map((menu, index) => (
           <li key={index} className="relative md:mr-4">
             <Link
