@@ -1,5 +1,5 @@
 import React from "react";
-import * as HeroIcons from "@heroicons/react/24/solid";
+import * as HeroIcons from "@heroicons/react/24/outline";
 
 interface ButtonProps {
   onClick?: () => void;
@@ -14,10 +14,10 @@ interface ButtonProps {
     | "black"
     | "white"
     | "transparent"
-    | "opacity50";
+    | "opacity10";
   className?: string;
   type?: "button" | "submit" | "reset";
-  icon?: keyof typeof HeroIcons;
+  icon?: string;
   iconPosition?: "left" | "right";
 }
 
@@ -35,8 +35,9 @@ const colorClasses = {
   indigo: "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-500",
   black: "bg-black text-white hover:bg-gray-800 focus:ring-gray-700",
   white: "bg-white text-black hover:bg-gray-200 focus:ring-gray-300",
-  transparent: "bg-transparent text-black",
-  opacity50: "bg-black bg-opacity-10 text-black",
+  transparent:
+    "bg-transparent text-black hover:bg-rose-600 hover:text-white focus:ring-rose-300",
+  opacity10: "bg-black bg-opacity-10 text-black focus:ring-rose-300",
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -49,7 +50,9 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   iconPosition = "left",
 }) => {
-  const IconComponent = icon ? HeroIcons[icon] : null;
+  const IconComponent =
+    icon &&
+    (HeroIcons as Record<string, React.FC<{ className?: string }>>)[icon];
 
   const sizeClass = children ? sizeClasses[size] : "";
   const iconOnlyClasses = !children ? "w-10 h-10" : "";
