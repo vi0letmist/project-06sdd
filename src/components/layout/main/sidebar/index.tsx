@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Button from "@/components/common/button";
+import Button from "@/components/common/Button";
 import Navbar from "@/components/layout/main/navbar";
 
 interface SidebarProps {
@@ -20,15 +20,15 @@ export default function Sidebar({ onSidebarToggle }: SidebarProps) {
     <>
       <div
         className={`fixed inset-y-0 left-0 transform transition-all duration-300 z-40 h-full ${
-          isOpen ? "w-64" : "w-16"
-        } p-4 shadow-lg`}
+          isOpen ? "w-48" : "w-16"
+        } py-4 pr-0`}
       >
-        <div className="flex flex-col h-full">
-          <div>
+        <div className="flex flex-col h-full border-r">
+          <div className="h-16 flex justify-center items-start text-center">
             <h1>logo keren</h1>
           </div>
-          <div className="flex-1 flex items-center">
-            <Navbar />
+          <div className="flex-1 flex items-center px-3">
+            <Navbar isSidebarOpen={isOpen} />
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default function Sidebar({ onSidebarToggle }: SidebarProps) {
       <Button
         className="fixed bottom-4 left-3 rounded-3xl z-50"
         icon={isOpen ? "Bars3BottomRightIcon" : "Bars3BottomLeftIcon"}
-        color="opacity50"
+        color="opacity10"
         onClick={handleToggle}
       />
     </>

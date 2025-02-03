@@ -22,13 +22,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Sidebar onSidebarToggle={handleSidebarToggle} />
 
       <div
-        className="flex-1 flex flex-col transition-all duration-300"
-        style={{
-          marginLeft: isSidebarOpen ? "16rem" : "4rem",
-        }}
+        className={`flex-1 flex flex-col transition-all duration-300 mr-4
+        ${isSidebarOpen ? "ml-48" : "ml-16"}`}
       >
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pt-20 px-6">{children}</main>
         <Footer />
       </div>
     </div>

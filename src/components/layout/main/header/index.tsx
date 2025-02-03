@@ -1,12 +1,36 @@
+import { useState } from "react";
+import InputText from "@/components/common/InputText";
+import Button from "@/components/common/Button";
+import UserDropdown from "./UserDropdown";
+
 const Header = () => {
+  const [search, setValue] = useState("");
+
+  const handleNotification = () => {};
+
   return (
-    <header className="py-4 px-8">
+    <header className="fixed bg-white py-4 px-6 transition-all duration-300">
       <div className="grid grid-cols-12 items-center gap-4">
-        <div className="col-span-2">
-          <span className="animate-pulse text-2xl">ini search</span>
+        <div className="col-span-2 flex">
+          <InputText
+            placeholder="Search book names, authors, genres"
+            icon="MagnifyingGlassIcon"
+            iconPosition="left"
+            value={search}
+            onChange={(e) => setValue(e.target.value)}
+          />
         </div>
-        <div className="col-span-8 flex justify-center"></div>
-        <div className="col-span-2 flex justify-end">ini icon</div>
+        <div className="col-span-6 flex justify-center"></div>
+        <div className="col-span-4 flex justify-end items-center">
+          <UserDropdown className="pr-4" />
+          <Button
+            className={`rounded-3xl z-50e`}
+            icon="BellIcon"
+            color="transparent"
+            size="md"
+            onClick={handleNotification}
+          />
+        </div>
       </div>
     </header>
   );
