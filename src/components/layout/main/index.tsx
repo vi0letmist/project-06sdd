@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="relative w-full min-h-screen flex">
+    <div className="relative">
       <Sidebar onSidebarToggle={handleSidebarToggle} />
 
       <div
@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         ${isSidebarOpen ? "ml-48" : "ml-16"}`}
       >
         <Header />
-        <main className="flex-1 pt-20 px-6">{children}</main>
+        <main className="flex-1 pt-20 pl-6 pr-2">{children}</main>
         <Footer />
       </div>
     </div>

@@ -9,7 +9,7 @@ const Header = () => {
   const handleNotification = () => {};
 
   return (
-    <header className="fixed bg-white py-4 px-6 transition-all duration-300">
+    <header className="fixed bg-white z-20 py-4 px-6 transition-all duration-300">
       <div className="grid grid-cols-12 items-center gap-4">
         <div className="col-span-2 flex">
           <InputText

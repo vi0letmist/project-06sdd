@@ -21,7 +21,7 @@ export default function Sidebar({ onSidebarToggle }: SidebarProps) {
       <div
         className={`fixed inset-y-0 left-0 transform transition-all duration-300 z-40 h-full ${
           isOpen ? "w-48" : "w-16"
-        } py-4 pr-0`}
+        } py-4 pr-0 bg-white`}
       >
         <div className="flex flex-col h-full border-r">
           <div className="h-16 flex justify-center items-start text-center">
