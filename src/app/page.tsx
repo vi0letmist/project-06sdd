@@ -1,9 +1,73 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Button from "@/components/common/Button";
+import CardBook from "@/components/card/CardBook";
+import CardBookCollection from "@/components/card/CardBookCollection";
+import CardBookMustRead from "@/components/card/CardBookMustRead";
 
-import Image from "next/image";
-import julian from "@/components/assets/images/1984 - george orwell.jpg";
+const bookList = [
+  {
+    title: "Hujan Bulan Juni",
+    author: "Sapardi Djoko Damono",
+    year: "2021",
+    genre: "Finction",
+    imageSrc: "Hujan-Bulan-Juni-Sebuah-Novel.jpg",
+  },
+  {
+    title: "A Song of Ice and Fire: A Game of Thrones",
+    author: "George R. R. Martin",
+    year: "1996",
+    genre: "Finction",
+    imageSrc: "GOThcEng.jpg",
+  },
+  {
+    title: "1984",
+    author: "George Orwell",
+    year: "1949",
+    genre: "Finction",
+    imageSrc: "1984 - george orwell2.jpg",
+  },
+  {
+    title: "The Catcher in the Rye",
+    author: "J.D. Salinger",
+    year: "1951",
+    genre: "Finction",
+    imageSrc: "the catcher in the rye - jd salinger.jpg",
+  },
+];
+
+const collectionList = [
+  {
+    title: "1984",
+    author: "George Orwell",
+    genre: "Dystopian fiction",
+    imageSrc: "1984 - george orwell2.jpg",
+  },
+  {
+    title: "Brave New World",
+    author: "Aldous Huxley",
+    genre: "Dystopian Fiction",
+    imageSrc: "brave-new-world_aldous-huxley.jpg",
+  },
+  {
+    title: "Fahrenhait 451",
+    author: "Ray Bradbury",
+    genre: "Dystopian Fiction",
+    imageSrc: "fahrenhait-451_ray-bradburry.jpg",
+  },
+  {
+    title: "Animal Farm",
+    author: "George Orwell",
+    genre: "Political Satire",
+    imageSrc: "animal-farm_george orwell.jpg",
+  },
+  {
+    title: "The Road",
+    author: "Cormac McCarthy",
+    genre: "Post-apocalyptic fiction",
+    imageSrc: "the-road_cormac-mcCarthy.jpg",
+  },
+];
 
 const Home = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -15,8 +79,11 @@ const Home = () => {
     if (sliderRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
 
-      setIsAtStart(scrollLeft <= 0);
-      setIsAtEnd(Math.ceil(scrollLeft + clientWidth) >= scrollWidth); // Fix rounding issue
+      const isAtStart = scrollLeft <= 0;
+      const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 1;
+
+      setIsAtStart(isAtStart);
+      setIsAtEnd(isAtEnd);
     }
   };
 
@@ -35,111 +102,99 @@ const Home = () => {
   };
 
   useEffect(() => {
-    updateScrollButtons();
+    const handleScroll = () => requestAnimationFrame(updateScrollButtons);
+
     if (sliderRef.current) {
-      sliderRef.current.addEventListener("scroll", updateScrollButtons);
-      return () => {
-        sliderRef.current?.removeEventListener("scroll", updateScrollButtons);
-      };
+      sliderRef.current.addEventListener("scroll", handleScroll);
+      updateScrollButtons();
+
+      return () =>
+        sliderRef.current?.removeEventListener("scroll", handleScroll);
     }
   }, []);
 
   return (
     <div>
-      <div className="relative w-full">
-        {!isAtStart && (
-          <Button
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black text-white p-2 rounded-full shadow-lg"
-            icon="ArrowLeftIcon"
-            color="opacity10"
-            onClick={scrollLeft}
-          />
-        )}
-
-        <div
-          ref={sliderRef}
-          className="flex overflow-x-auto overflow-y-hidden gap-4 py-4 items-center scroll-smooth scrollbar-hide"
-        >
-          <div className="max-w-[500px] min-w-[500px] p-4 bg-red-800 rounded-lg h-64">
-            <h1>col 1</h1>
-          </div>
-          <div className="max-w-[500px] min-w-[500px] p-4 bg-red-600 rounded-lg h-64">
-            <h1>col 2</h1>
-          </div>
-          <div className="max-w-[500px] min-w-[500px] p-4 bg-red-400 rounded-lg h-64">
-            <h1>col 3</h1>
-          </div>
-          <div className="max-w-[500px] min-w-[500px] p-4 bg-red-200 rounded-lg h-64">
-            <h1>col 4</h1>
-          </div>
-        </div>
-
-        {!isAtEnd && (
-          <Button
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black text-white p-2 rounded-full shadow-lg"
-            icon="ArrowRightIcon"
-            color="opacity10"
-            onClick={scrollRight}
-          />
-        )}
-      </div>
-
-      <div className="relative w-[500px] h-48 overflow-hidden mt-10 rounded-xl">
-        <Image
-          src={julian}
-          alt="background blur"
-          className="absolute bottom-0 left-0 w-full h-[70%] object-cover blur-sm"
-        />
-
-        {/* Background Overlay (to darken the blur) */}
-        <div className="absolute bottom-0 left-0 w-full h-[75%] backdrop-blur-lg rounded-xl"></div>
-        <div className="grid grid-cols-3 min-h-full gap-2 p-4 pt-0 text-white w-full">
-          <div className="col-span-1 flex items-end z-10 px-2">
-            <Image
-              src={julian}
-              alt="dropdown icon"
-              className="rounded-lg shadow-lg shadow-gray-700"
+      {/* section last borrowed books */}
+      <section>
+        <h1 className="text-xl font-bold py-2">Last Borrowed Books</h1>
+        <div className="relative w-full">
+          {!isAtStart && (
+            <Button
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black text-white p-2 rounded-full shadow-lg"
+              icon="ArrowLeftIcon"
+              color="opacity10"
+              onClick={scrollLeft}
             />
+          )}
+
+          <div
+            ref={sliderRef}
+            className="flex overflow-x-auto overflow-y-hidden gap-4 py-4 items-center scroll-smooth scrollbar-hide"
+          >
+            {bookList.map((book, index) => (
+              <div
+                key={index}
+                className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
+              >
+                <CardBook
+                  title={book.title}
+                  author={book.author}
+                  year={book.year}
+                  genre={book.genre}
+                  imageSrc={book.imageSrc}
+                />
+              </div>
+            ))}
           </div>
-          <div className="col-span-2 pt-[20%] z-10">
-            <h3 className="font-bold">ddddddddddddddd</h3>
-            <p className="text-sm">By qaaaa</p>
-            <p className="text-xs opacity-80">2021 • aa</p>
+
+          {!isAtEnd && (
+            <Button
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black text-white p-2 rounded-full shadow-lg"
+              icon="ArrowRightIcon"
+              color="opacity10"
+              onClick={scrollRight}
+            />
+          )}
+        </div>
+      </section>
+
+      {/* section newcollections and must-read selections */}
+      <section>
+        <div className="grid grid-cols-4 gap-4 py-2">
+          <div className="col-span-3">
+            <h1 className="text-xl font-bold py-4">New Collections</h1>
+            <div className="grid grid-cols-5 gap-4">
+              {collectionList.map((book, index) => (
+                <div
+                  key={index}
+                  className="col-span-1 flex flex-col items-center p-2"
+                >
+                  <CardBookCollection
+                    className="w-full"
+                    title={book.title}
+                    author={book.author}
+                    genre={book.genre}
+                    imageSrc={book.imageSrc}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-span-1 bg-rose-600 p-4 h-full rounded-lg text-white">
+            <h1 className="text-xl font-bold">Must-Read Selections</h1>
+
+            {collectionList.slice(0, 3).map((book, index) => (
+              <CardBookMustRead
+                key={index}
+                title={book.title}
+                author={book.author}
+                imageSrc={book.imageSrc}
+              />
+            ))}
           </div>
         </div>
-      </div>
-
-      <div className="mt-10">
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-        <h1>content</h1>
-      </div>
+      </section>
     </div>
   );
 };
