@@ -1,8 +1,10 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 import Image from "next/image";
 
 interface BookProps {
   className?: string;
+  id: string;
   title: string;
   author: string;
   year: string;
@@ -12,14 +14,21 @@ interface BookProps {
 
 const CardBook: React.FC<BookProps> = ({
   className,
+  id,
   title,
   author,
   year,
   genre,
   imageSrc,
 }) => {
+  const router = useRouter();
+
+  const toDetail = () => {
+    router.push(`/books/${id}`);
+  };
+
   return (
-    <div className={`${className}`}>
+    <div className={`cursor-pointer ${className}`} onClick={toDetail}>
       <Image
         src={`/images/${imageSrc}`}
         alt="background blur"
@@ -29,14 +38,17 @@ const CardBook: React.FC<BookProps> = ({
       />
 
       <div className="absolute bottom-0 left-0 w-full h-[75%] bg-black bg-opacity-30 backdrop-blur-2xl rounded-xl"></div>
-      <div className="grid grid-cols-3 min-h-full gap-2 px-4 text-white">
+      <div
+        className="grid grid-cols-3 min-h-full gap-2 px-4 text-white transition-transform duration-300 ease-in-out
+      hover:translate-y-[-10px] will-change-transform"
+      >
         <div className="col-span-1 flex items-end px-2 z-10">
           <Image
             src={`/images/${imageSrc}`}
             alt="book cover"
             width={150}
             height={200}
-            className="rounded-lg shadow-lg shadow-gray-700"
+            className="rounded-lg shadow-[-10px_10px_10px_rgba(0,0,0,0.3)]"
           />
         </div>
 

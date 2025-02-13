@@ -34,7 +34,8 @@ const colorClasses = {
   gray: "bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500",
   indigo: "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-500",
   black: "bg-black text-white hover:bg-gray-800 focus:ring-gray-700",
-  white: "bg-white text-black hover:bg-gray-200 focus:ring-gray-300",
+  white:
+    "bg-white text-black hover:bg-rose-600 hover:text-white focus:ring-rose-300",
   transparent:
     "bg-transparent text-black hover:bg-rose-600 hover:text-white focus:ring-rose-300",
   opacity10: "bg-black bg-opacity-10 text-black focus:ring-rose-300",

@@ -7,6 +7,7 @@ import CardBookMustRead from "@/components/card/CardBookMustRead";
 
 const bookList = [
   {
+    id: "1001",
     title: "Hujan Bulan Juni",
     author: "Sapardi Djoko Damono",
     year: "2021",
@@ -14,6 +15,7 @@ const bookList = [
     imageSrc: "Hujan-Bulan-Juni-Sebuah-Novel.jpg",
   },
   {
+    id: "1002",
     title: "A Song of Ice and Fire: A Game of Thrones",
     author: "George R. R. Martin",
     year: "1996",
@@ -21,6 +23,7 @@ const bookList = [
     imageSrc: "GOThcEng.jpg",
   },
   {
+    id: "1003",
     title: "1984",
     author: "George Orwell",
     year: "1949",
@@ -28,6 +31,7 @@ const bookList = [
     imageSrc: "1984 - george orwell2.jpg",
   },
   {
+    id: "1004",
     title: "The Catcher in the Rye",
     author: "J.D. Salinger",
     year: "1951",
@@ -38,30 +42,35 @@ const bookList = [
 
 const collectionList = [
   {
+    id: "1003",
     title: "1984",
     author: "George Orwell",
     genre: "Dystopian fiction",
     imageSrc: "1984 - george orwell2.jpg",
   },
   {
+    id: "1006",
     title: "Brave New World",
     author: "Aldous Huxley",
     genre: "Dystopian Fiction",
     imageSrc: "brave-new-world_aldous-huxley.jpg",
   },
   {
+    id: "1007",
     title: "Fahrenhait 451",
     author: "Ray Bradbury",
     genre: "Dystopian Fiction",
     imageSrc: "fahrenhait-451_ray-bradburry.jpg",
   },
   {
+    id: "1008",
     title: "Animal Farm",
     author: "George Orwell",
     genre: "Political Satire",
     imageSrc: "animal-farm_george orwell.jpg",
   },
   {
+    id: "1009",
     title: "The Road",
     author: "Cormac McCarthy",
     genre: "Post-apocalyptic fiction",
@@ -138,6 +147,7 @@ const Home = () => {
                 className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
               >
                 <CardBook
+                  id={book.id}
                   title={book.title}
                   author={book.author}
                   year={book.year}
@@ -162,16 +172,17 @@ const Home = () => {
       {/* section newcollections and must-read selections */}
       <section>
         <div className="grid grid-cols-4 gap-4 py-2">
-          <div className="col-span-3">
+          <div className="col-span-4 md:col-span-3">
             <h1 className="text-xl font-bold py-4">New Collections</h1>
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-4 md:grid-cols-5 gap-4 justify-items-center">
               {collectionList.map((book, index) => (
                 <div
                   key={index}
-                  className="col-span-1 flex flex-col items-center p-2"
+                  className="col-span-2 md:col-span-1 flex flex-col items-center p-2"
                 >
                   <CardBookCollection
-                    className="w-full"
+                    className="w-full break-all"
+                    id={book.id}
                     title={book.title}
                     author={book.author}
                     genre={book.genre}
@@ -181,12 +192,13 @@ const Home = () => {
               ))}
             </div>
           </div>
-          <div className="col-span-1 bg-rose-600 p-4 h-full rounded-lg text-white">
+          <div className="col-span-4 md:col-span-1 bg-rose-600 p-4 h-full rounded-lg text-white">
             <h1 className="text-xl font-bold">Must-Read Selections</h1>
 
             {collectionList.slice(0, 3).map((book, index) => (
               <CardBookMustRead
                 key={index}
+                id={book.id}
                 title={book.title}
                 author={book.author}
                 imageSrc={book.imageSrc}
