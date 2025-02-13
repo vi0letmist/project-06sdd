@@ -47,7 +47,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ className }) => {
           alt="dropdown icon"
           className="w-5 h-5 rounded-full"
         />
-        <span className="text-sm">{username}</span>
+        <span className="text-sm hidden md:flex">{username}</span>
         <HeroIcons.ChevronDownIcon
           className={`h-4 w-4 transition-transform duration-300 ${
             isOpen ? "rotate-180" : "rotate-0"
