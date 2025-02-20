@@ -1,9 +1,7 @@
 "use client";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import Button from "@/components/common/Button";
 import CardBook from "@/components/card/CardBook";
-import CardBookCollection from "@/components/card/CardBookCollection";
-import CardBookMustRead from "@/components/card/CardBookMustRead";
 
 const bookList = [
   {
@@ -78,7 +76,7 @@ const collectionList = [
   },
 ];
 
-const Home = () => {
+const BorrowRecords = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -121,12 +119,11 @@ const Home = () => {
         sliderRef.current?.removeEventListener("scroll", handleScroll);
     }
   }, []);
-
   return (
     <div>
-      {/* section last borrowed books */}
+      {/* section current borrowed books */}
       <section>
-        <h1 className="text-xl font-bold py-2">Last Borrowed Books</h1>
+        <h1 className="text-xl font-bold py-2">Current Borrowed Books</h1>
         <div className="relative w-full">
           {!isAtStart && (
             <Button
@@ -169,46 +166,52 @@ const Home = () => {
         </div>
       </section>
 
-      {/* section newcollections and must-read selections */}
-      <section>
-        <div className="grid grid-cols-4 gap-4 py-4">
-          <div className="col-span-4 md:col-span-3">
-            <h1 className="text-xl font-bold py-4">New Collections</h1>
-            <div className="grid grid-cols-4 md:grid-cols-5 gap-4 justify-items-center">
-              {collectionList.map((book, index) => (
-                <div
-                  key={index}
-                  className="col-span-2 md:col-span-1 flex flex-col items-center p-2"
-                >
-                  <CardBookCollection
-                    className="w-full break-all"
-                    id={book.id}
-                    title={book.title}
-                    author={book.author}
-                    genre={book.genre}
-                    imageSrc={book.imageSrc}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-span-4 md:col-span-1 bg-rose-600 p-4 h-full rounded-lg text-white">
-            <h1 className="text-xl font-bold">Must-Read Selections</h1>
+      {/* section last borrowed books */}
+      <section className="py-4">
+        <h1 className="text-xl font-bold py-2">Last Borrowed Books</h1>
+        <div className="relative w-full">
+          {!isAtStart && (
+            <Button
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black text-white p-2 rounded-full shadow-lg"
+              icon="ArrowLeftIcon"
+              color="opacity10"
+              onClick={scrollLeft}
+            />
+          )}
 
-            {collectionList.slice(0, 3).map((book, index) => (
-              <CardBookMustRead
+          <div
+            ref={sliderRef}
+            className="flex overflow-x-auto overflow-y-hidden gap-4 py-4 items-center scroll-smooth scrollbar-hide"
+          >
+            {bookList.map((book, index) => (
+              <div
                 key={index}
-                id={book.id}
-                title={book.title}
-                author={book.author}
-                imageSrc={book.imageSrc}
-              />
+                className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
+              >
+                <CardBook
+                  id={book.id}
+                  title={book.title}
+                  author={book.author}
+                  year={book.year}
+                  genre={book.genre}
+                  imageSrc={book.imageSrc}
+                />
+              </div>
             ))}
           </div>
+
+          {!isAtEnd && (
+            <Button
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black text-white p-2 rounded-full shadow-lg"
+              icon="ArrowRightIcon"
+              color="opacity10"
+              onClick={scrollRight}
+            />
+          )}
         </div>
       </section>
     </div>
   );
 };
 
-export default Home;
+export default BorrowRecords;

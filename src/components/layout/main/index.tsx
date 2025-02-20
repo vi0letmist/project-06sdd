@@ -18,17 +18,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="relative w-full min-h-screen flex">
+    <div className="relative">
       <Sidebar onSidebarToggle={handleSidebarToggle} />
 
       <div
-        className="flex-1 flex flex-col transition-all duration-300"
-        style={{
-          marginLeft: isSidebarOpen ? "16rem" : "4rem",
-        }}
+        className={`flex-1 flex flex-col transition-all duration-300 mr-4
+        ${isSidebarOpen ? "ml-48" : "ml-16"}`}
       >
-        <Header />
-        <main className="flex-1">{children}</main>
+        <Header isSidebarOpen={isSidebarOpen} />
+        <main className="flex-1 pt-20 pl-6 pr-2 min-h-[97vh]">{children}</main>
         <Footer />
       </div>
     </div>
