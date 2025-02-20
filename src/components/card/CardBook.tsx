@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Image from "next/image";
@@ -34,10 +35,10 @@ const CardBook: React.FC<BookProps> = ({
         alt="background blur"
         width={300}
         height={200}
-        className="absolute bottom-0 left-0 w-full h-[70%] object-cover blur-sm"
+        className="absolute bottom-0 left-0 w-full h-[70%] object-cover blur-sm py-2"
       />
 
-      <div className="absolute bottom-0 left-0 w-full h-[75%] bg-black bg-opacity-30 backdrop-blur-2xl rounded-xl"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[75%] bg-black bg-opacity-30 backdrop-blur-2xl rounded-xl py-2"></div>
       <div
         className="grid grid-cols-3 min-h-full gap-2 px-4 text-white transition-transform duration-300 ease-in-out
       hover:translate-y-[-10px] will-change-transform"
