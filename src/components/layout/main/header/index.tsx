@@ -3,15 +3,23 @@ import InputText from "@/components/common/InputText";
 import Button from "@/components/common/Button";
 import UserDropdown from "./UserDropdown";
 
-const Header = () => {
+interface HeaderProps {
+  isSidebarOpen: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
   const [search, setValue] = useState("");
 
   const handleNotification = () => {};
 
   return (
-    <header className="fixed bg-white z-20 py-4 px-6 transition-all duration-300">
-      <div className="grid grid-cols-12 items-center gap-4">
-        <div className="col-span-6 md:col-span-2 flex">
+    <header
+      className={`fixed bg-white z-50 py-4 pl-6 transition-all duration-300 w-full ${
+        isSidebarOpen ? "pr-52" : "pr-20"
+      }`}
+    >
+      <div className="grid grid-cols-2 items-center gap-4">
+        <div className="col-span-1 flex">
           <InputText
             placeholder="Search book names, authors, genres"
             icon="MagnifyingGlassIcon"
@@ -20,8 +28,7 @@ const Header = () => {
             onChange={(e) => setValue(e.target.value)}
           />
         </div>
-        <div className="hidden md:col-span-6 md:flex justify-center"></div>
-        <div className="col-span-6 md:col-span-4 flex justify-end items-center">
+        <div className="col-span-1 flex justify-end items-center px-2">
           <UserDropdown className="pr-4" />
           <Button
             className={`rounded-3xl z-50e`}

@@ -25,8 +25,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         className={`flex-1 flex flex-col transition-all duration-300 mr-4
         ${isSidebarOpen ? "ml-48" : "ml-16"}`}
       >
-        <Header />
-        <main className="flex-1 pt-20 pl-6 pr-2">{children}</main>
+        <Header isSidebarOpen={isSidebarOpen} />
+        <main className="flex-1 pt-20 pl-6 pr-2 min-h-[97vh]">{children}</main>
         <Footer />
       </div>
     </div>
