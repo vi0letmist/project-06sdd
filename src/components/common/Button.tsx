@@ -14,7 +14,8 @@ interface ButtonProps {
     | "black"
     | "white"
     | "transparent"
-    | "opacity10";
+    | "opacity10"
+    | "rose";
   className?: string;
   type?: "button" | "submit" | "reset";
   icon?: string;
@@ -38,7 +39,9 @@ const colorClasses = {
     "bg-white text-black hover:bg-rose-600 hover:text-white focus:ring-rose-300",
   transparent:
     "bg-transparent text-black hover:bg-rose-600 hover:text-white focus:ring-rose-300",
-  opacity10: "bg-black bg-opacity-10 text-black focus:ring-rose-300",
+  opacity10:
+    "bg-black bg-opacity-10 hover:bg-opacity-20 text-black focus:ring-rose-300",
+  rose: "bg-rose-600 text-white hover:bg-white hover:text-black border border-rose-600 focus:ring-rose-300",
 };
 
 const Button: React.FC<ButtonProps> = ({
