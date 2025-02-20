@@ -171,7 +171,7 @@ const Home = () => {
 
       {/* section newcollections and must-read selections */}
       <section>
-        <div className="grid grid-cols-4 gap-4 py-2">
+        <div className="grid grid-cols-4 gap-4 py-4">
           <div className="col-span-4 md:col-span-3">
             <h1 className="text-xl font-bold py-4">New Collections</h1>
             <div className="grid grid-cols-4 md:grid-cols-5 gap-4 justify-items-center">

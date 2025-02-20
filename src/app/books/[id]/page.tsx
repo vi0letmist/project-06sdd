@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import Button from "@/components/common/Button";
 
 interface BookPageProps {
@@ -16,10 +15,10 @@ const BookDetail: React.FC<BookPageProps> = async ({ params }) => {
         alt="background blur"
         width={300}
         height={200}
-        className="absolute bottom-0 left-0 w-full h-[68%] object-cover blur-sm"
+        className="absolute bottom-0 left-0 w-full h-[68%] object-cover blur-sm py-2"
       />
 
-      <div className="absolute bottom-0 left-0 w-full h-[68%] bg-black bg-opacity-30 backdrop-blur-2xl rounded-xl"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[68%] bg-black bg-opacity-30 backdrop-blur-2xl rounded-xl py-2"></div>
       <div className="grid grid-cols-2 min-h-full gap-2 px-4">
         <div
           className="col-span-1 flex items-end justify-center px-2 z-10 transition-transform duration-300 ease-in-out
