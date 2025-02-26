@@ -33,7 +33,7 @@ const CreateBook = () => {
     <div className="pb-6">
       <h1 className="text-xl font-bold py-2">Create Book</h1>
       <div className="grid grid-cols-2 gap-8">
-        <div className="col-span-1">
+        <div className="col-span-2 md:col-span-1">
           <div className="py-1">
             <h3 className="font-semibold text-lg py-2 px-3">Cover</h3>
             <InputImage
@@ -95,7 +95,7 @@ const CreateBook = () => {
             />
           </div>
         </div>
-        <div className="col-span-1">
+        <div className="col-span-2 md:col-span-1">
           <div className="py-1">
             <h3 className="font-semibold text-lg py-2 px-3">Publish Date</h3>
             <DatePicker

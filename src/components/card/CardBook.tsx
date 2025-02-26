@@ -43,7 +43,7 @@ const CardBook: React.FC<BookProps> = ({
         className="grid grid-cols-3 min-h-full gap-2 px-4 text-white transition-transform duration-300 ease-in-out
       hover:translate-y-[-10px] will-change-transform"
       >
-        <div className="col-span-1 flex items-end px-2 z-10">
+        <div className="col-span-3 md:col-span-1 flex items-end justify-center px-2 z-10">
           <Image
             src={`/images/${imageSrc}`}
             alt="book cover"
@@ -53,7 +53,7 @@ const CardBook: React.FC<BookProps> = ({
           />
         </div>
 
-        <div className="col-span-2 pt-[14%] flex flex-col justify-between h-full z-10">
+        <div className="col-span-3 md:col-span-2 pt-[14%] flex flex-col justify-between h-full z-10">
           <div className="py-2">
             <h3 className="font-semibold text-xl min-h-[56px] flex items-center">
               {title}

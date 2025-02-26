@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSidebar } from "@/context/SidebarContext";
 import CardBookWithDesc from "@/components/card/CardBookWithDesc";
 import Dropdown from "@/components/common/Dropdown";
 import Select from "@/components/common/Select";
@@ -20,6 +21,7 @@ const options1 = [
 
 const Books = () => {
   const router = useRouter();
+  const { isSidebarOpen } = useSidebar();
 
   const bookList = [
     {
@@ -81,20 +83,24 @@ const Books = () => {
       {/* section recommended books */}
       <section>
         <div className="grid grid-cols-2 gap-4 pb-4">
-          <div className="col-span-1">
+          <div
+            className={`${isSidebarOpen ? "col-span-2" : "col-span-1"} md:col-span-1`}
+          >
             <h1 className="text-xl font-bold py-2">Book Collections</h1>
           </div>
-          <div className="col-span-1 flex justify-end">
+          <div
+            className={`${isSidebarOpen ? "col-span-2" : "col-span-1"} md:col-span-1 flex justify-end`}
+          >
             <Button className="rounded-full" color="rose" onClick={toCreate}>
               Create Book
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-3 flex flex-col gap-4">
-          {bookList.map((book, index) => (
+        <div className="grid grid-cols-2 flex flex-col gap-4">
+          {bookList.slice(0, 2).map((book, index) => (
             <div
               key={index}
-              className="col-span-3 lg:col-span-1 px-2 py-4 relative"
+              className="col-span-2 lg:col-span-1 px-2 py-4 relative"
             >
               <CardBookWithDesc
                 id={book.id}
@@ -102,7 +108,7 @@ const Books = () => {
                 author={book.author}
                 description={book.description}
                 imageSrc={book.imageSrc}
-                lineClamp={4}
+                lineClamp={5}
                 size="md"
               />
             </div>
@@ -113,7 +119,9 @@ const Books = () => {
       {/* list of all books and filter */}
       <section className="py-4">
         <div className="grid grid-cols-2 justify-between bg-gray-200 p-4 rounded-full">
-          <div className="col-span-1">
+          <div
+            className={`${isSidebarOpen ? "col-span-2 py-1" : "col-span-1"} md:col-span-1 flex items-center`}
+          >
             <Dropdown
               defaultText={selected}
               list={options}
@@ -123,7 +131,9 @@ const Books = () => {
               onSelect={handleSelection}
             />
           </div>
-          <div className="col-span-1 flex justify-end">
+          <div
+            className={`${isSidebarOpen ? "col-span-2 py-1" : "col-span-1"} md:col-span-1 flex justify-end`}
+          >
             <Select
               className="w-full md:w-1/2"
               options={options1}
@@ -135,11 +145,11 @@ const Books = () => {
         </div>
 
         <div className="py-4">
-          <div className="grid grid-cols-4 flex flex-col gap-4">
+          <div className="grid grid-cols-3 flex flex-col gap-4">
             {bookList.map((book, index) => (
               <div
                 key={index}
-                className="col-span-4 lg:col-span-1 px-2 py-4 relative"
+                className="col-span-3 lg:col-span-1 px-2 py-4 relative"
               >
                 <CardBookWithDesc
                   id={book.id}
