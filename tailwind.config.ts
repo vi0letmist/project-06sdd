@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        roboto: ["var(--font-roboto)", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
