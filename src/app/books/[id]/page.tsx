@@ -1,10 +1,10 @@
-// This is a Server Component (it can be async)
 import BookDetail from "./BookDetail";
 
-interface BookPageProps {
-  params: { id: string };
-}
+type Params = Promise<{ id: string }>;
 
-export default async function BookDetailPage({ params }: BookPageProps) {
-  return <BookDetail id={params.id} />;
+export default async function BookDetailPage(props: { params: Params }) {
+  const params = await props.params;
+  const id = params.id;
+
+  return <BookDetail id={id} />;
 }
