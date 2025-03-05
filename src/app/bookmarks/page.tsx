@@ -45,11 +45,11 @@ const Bookmarks = () => {
       {/* section bookmarks */}
       <section>
         <h1 className="text-xl font-bold py-2">Bookmarks</h1>
-        <div className="grid grid-cols-4 flex flex-col gap-4">
+        <div className="grid grid-cols-3 flex flex-col gap-4">
           {bookList.map((book, index) => (
             <div
               key={index}
-              className="col-span-4 lg:col-span-1 px-2 py-4 relative"
+              className="col-span-3 lg:col-span-1 px-2 py-4 relative"
             >
               <CardBookWithDesc
                 id={book.id}

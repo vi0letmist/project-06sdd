@@ -1,14 +1,12 @@
 import { useState } from "react";
+import { useSidebar } from "@/context/SidebarContext";
 import InputText from "@/components/common/InputText";
 import Button from "@/components/common/Button";
 import UserDropdown from "./UserDropdown";
 
-interface HeaderProps {
-  isSidebarOpen: boolean;
-}
-
-const Header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
+const Header = () => {
   const [search, setValue] = useState("");
+  const { isSidebarOpen } = useSidebar();
 
   const handleNotification = () => {};
 
@@ -19,7 +17,9 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
       }`}
     >
       <div className="grid grid-cols-2 items-center gap-4">
-        <div className="col-span-1 flex">
+        <div
+          className={`${isSidebarOpen ? "col-span-2" : "col-span-1"} md:col-span-1 flex`}
+        >
           <InputText
             placeholder="Search book names, authors, genres"
             icon="MagnifyingGlassIcon"
@@ -28,10 +28,12 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
             onChange={(e) => setValue(e.target.value)}
           />
         </div>
-        <div className="col-span-1 flex justify-end items-center px-2">
+        <div
+          className={`${isSidebarOpen ? "sm:col-span-2 sm:flex hidden" : "flex col-span-1"} md:col-span-1 flex justify-end items-center px-2`}
+        >
           <UserDropdown className="pr-4" />
           <Button
-            className={`rounded-3xl z-50e`}
+            className={`rounded-3xl z-50`}
             icon="BellIcon"
             color="transparent"
             size="md"

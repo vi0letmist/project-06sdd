@@ -9,7 +9,7 @@ interface UserDropdownProps {
 }
 
 const dropdownList = [
-  { name: "Profile", destination: "/profile", icon: "UserIcon" },
+  { name: "Settings", destination: "/settings", icon: "Cog8ToothIcon" },
   { name: "Logout", destination: "/logout", icon: "ArrowRightOnRectangleIcon" },
 ];
 

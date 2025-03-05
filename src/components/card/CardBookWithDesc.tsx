@@ -34,15 +34,15 @@ const CardBookWithDesc: React.FC<BookProps> = ({
     sm: {
       title: "text-base min-h-[40px]",
       authorContainer: "font-semibold text-base",
-      authorText: "text-xs font-normal",
-      description: "text-xs font-light",
+      authorText: "text-sm font-normal",
+      description: "text-xs md:text-sm font-light",
       padding: "py-2",
     },
     md: {
-      title: "text-xl min-h-[48px]",
-      authorContainer: "font-semibold text-xl",
+      title: "text-lg md:text-xl min-h-[56px]",
+      authorContainer: "font-semibold text-lg md:text-xl",
       authorText: "text-base font-normal",
-      description: "text-xs font-light",
+      description: "text-sm md:text-base font-light",
       padding: "py-4",
     },
     lg: {
@@ -101,7 +101,7 @@ const CardBookWithDesc: React.FC<BookProps> = ({
         className="grid grid-cols-3 min-h-full gap-2 px-4 text-white transition-transform duration-300 ease-in-out
       hover:translate-y-[-10px] will-change-transform"
       >
-        <div className="col-span-1 flex items-end px-2 z-10">
+        <div className="col-span-3 md:col-span-1 flex items-end justify-start px-2 z-10">
           <Image
             src={`/images/${imageSrc}`}
             alt="book cover"
@@ -111,7 +111,7 @@ const CardBookWithDesc: React.FC<BookProps> = ({
           />
         </div>
 
-        <div className="col-span-2 pt-[14%] flex flex-col justify-between h-full z-10">
+        <div className="col-span-3 md:col-span-2 pt-[14%] flex flex-col justify-between h-full z-10">
           <div className={`${sizeClasses[size].padding}`}>
             <h3
               className={`font-semibold ${sizeClasses[size].title} flex items-center`}

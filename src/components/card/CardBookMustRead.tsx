@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useSidebar } from "@/context/SidebarContext";
 import React from "react";
 import Image from "next/image";
 
@@ -19,6 +20,7 @@ const CardBookMustRead: React.FC<BookProps> = ({
   imageSrc,
 }) => {
   const router = useRouter();
+  const { isSidebarOpen } = useSidebar();
 
   const toDetail = () => {
     router.push(`/books/${id}`);
@@ -30,7 +32,9 @@ const CardBookMustRead: React.FC<BookProps> = ({
       hover:translate-x-[-10px] will-change-transform ${className}`}
       onClick={toDetail}
     >
-      <div className="col-span-1 flex justify-center">
+      <div
+        className={`${isSidebarOpen ? "col-span-3" : "col-span-1"} md:col-span-1 flex justify-center`}
+      >
         <Image
           src={`/images/${imageSrc}`}
           alt="Hujan Bulan Juni"
@@ -39,7 +43,9 @@ const CardBookMustRead: React.FC<BookProps> = ({
           className="h-auto rounded-lg shadow-[-10px_10px_10px_rgba(0,0,0,0.3)]"
         />
       </div>
-      <div className="col-span-2 py-2">
+      <div
+        className={`${isSidebarOpen ? "col-span-3 text-center" : "col-span-2"} col-span-2 py-2`}
+      >
         <h3 className="font-semibold text-md">{title}</h3>
         <p className="text-sm font-normal">{author}</p>
       </div>

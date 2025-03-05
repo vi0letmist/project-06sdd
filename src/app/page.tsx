@@ -1,5 +1,6 @@
 "use client";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSidebar } from "@/context/SidebarContext";
 import Button from "@/components/common/Button";
 import CardBook from "@/components/card/CardBook";
 import CardBookCollection from "@/components/card/CardBookCollection";
@@ -79,6 +80,7 @@ const collectionList = [
 ];
 
 const Home = () => {
+  const { isSidebarOpen } = useSidebar();
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -144,7 +146,8 @@ const Home = () => {
             {bookList.map((book, index) => (
               <div
                 key={index}
-                className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
+                className="relative max-w-[250px] min-w-[250px] md:max-w-[500px] md:min-w-[500px] p-4 rounded-lg 
+                md:h-56 overflow-hidden rounded-xl"
               >
                 <CardBook
                   id={book.id}
@@ -178,7 +181,7 @@ const Home = () => {
               {collectionList.map((book, index) => (
                 <div
                   key={index}
-                  className="col-span-2 md:col-span-1 flex flex-col items-center p-2"
+                  className={`${isSidebarOpen ? "col-span-4" : "col-span-2"} md:col-span-1 flex flex-col items-center p-2`}
                 >
                   <CardBookCollection
                     className="w-full break-all"

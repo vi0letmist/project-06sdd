@@ -141,7 +141,8 @@ const BorrowRecords = () => {
             {bookList.map((book, index) => (
               <div
                 key={index}
-                className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
+                className="relative max-w-[250px] min-w-[250px] md:max-w-[500px] md:min-w-[500px] p-4 rounded-lg 
+                md:h-56 overflow-hidden rounded-xl"
               >
                 <CardBook
                   id={book.id}
@@ -186,7 +187,8 @@ const BorrowRecords = () => {
             {bookList.map((book, index) => (
               <div
                 key={index}
-                className="relative max-w-[500px] min-w-[500px] p-4 rounded-lg h-56 overflow-hidden rounded-xl"
+                className="relative max-w-[250px] min-w-[250px] md:max-w-[500px] md:min-w-[500px] p-4 rounded-lg 
+                md:h-56 overflow-hidden rounded-xl"
               >
                 <CardBook
                   id={book.id}
