@@ -33,7 +33,7 @@ const Header = () => {
         >
           <UserDropdown className="pr-4" />
           <Button
-            className={`rounded-3xl z-50e`}
+            className={`rounded-3xl z-50`}
             icon="BellIcon"
             color="transparent"
             size="md"
