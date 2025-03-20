@@ -44,7 +44,7 @@ const CardBookMustRead: React.FC<BookProps> = ({
         />
       </div>
       <div
-        className={`${isSidebarOpen ? "col-span-3 text-center" : "col-span-2"} col-span-2 py-2`}
+        className={`${isSidebarOpen ? "col-span-3 text-center" : "col-span-2"} md:col-span-2 md:text-left py-2`}
       >
         <h3 className="font-semibold text-md">{title}</h3>
         <p className="text-sm font-normal">{author}</p>
