@@ -1,20 +1,28 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSidebar } from "@/context/SidebarContext";
+import { useBookStore } from "@/store/book";
 import Image from "next/image";
 import Button from "@/components/common/Button";
+import { formatFullDate } from "@/lib/formatDate";
 
 interface BookDetailProps {
   id: string;
 }
 
 const BookDetail: React.FC<BookDetailProps> = ({ id }) => {
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { isSidebarOpen } = useSidebar();
+  const { book, getBookById } = useBookStore();
 
+  useEffect(() => {
+    getBookById(id);
+  }, [getBookById]);
   return (
     <div className="relative w-full py-2">
       <Image
-        src={`/images/Hujan-Bulan-Juni-Sebuah-Novel.jpg`}
+        src={`${BASE_URL + (book?.cover || "/jpg")}`}
         alt="background blur"
         width={300}
         height={200}
@@ -29,7 +37,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ id }) => {
       <div className="grid grid-cols-2 min-h-full gap-2 px-4">
         <div className="col-span-2 md:col-span-1 flex items-end justify-center px-2 z-10">
           <Image
-            src={`/images/Hujan-Bulan-Juni-Sebuah-Novel.jpg`}
+            src={`${BASE_URL + (book?.cover || "/jpg")}`}
             alt="book cover"
             width={240}
             height={200}
@@ -41,15 +49,15 @@ const BookDetail: React.FC<BookDetailProps> = ({ id }) => {
           <div className="flex flex-col min-h-[70%] text-white md:text-black">
             <div className="py-4">
               <h3 className="font-bold text-4xl min-h-[112px] flex items-center py-4">
-                Hujan Bulan Juni
+                {book?.title || "-"}
               </h3>
               <span className="font-semibold text-xl py-4">
-                Sapardi Djoko Damono
+                {book?.author || "-"}
               </span>
             </div>
             <div className="py-2">
               <span className="font-semibold text-xl">
-                10{" "}
+                {(book?.available_copies || "-") + " "}
                 <span className="text-white md:text-gray-700 text-base font-normal">
                   available copies
                 </span>
@@ -93,35 +101,31 @@ const BookDetail: React.FC<BookDetailProps> = ({ id }) => {
         <div className="col-span-2 md:col-span-1 z-10 text-white p-2 md:p-6">
           <h3 className="text-lg font-semibold py-2">Description</h3>
           <p className="text-justify text-sm leading-normal">
-            Novel Hujan Bulan Juni mengisahkan tentang bagaimana mungkin
-            seseorang mempunyai keinginan untuk mengurai kembali benang yang
-            tidak terkira jumlahnya dalam selembar sapu tangan yang sudah
-            ditenunnya sendiri. <br /> Bagaimana mungkin seseorang dapat
-            mendadak terbebas dari jaringan benang yang silang-menyilang,
-            susun-bersusun, dan timpa-menimpa dengan rapi di selembar sapu
-            tangan yang telah bertahun-tahun lamanya ditenun dengan sabar oleh
-            jari-jemarinya sendiri, oleh ketabahannya sendiri, oleh tarikan dan
-            hembusan nafasnya sendiri, oleh kesunyiannya sendiri, oleh
-            kerinduannya sendiri, oleh rintik waktu dalam benaknya sendiri, oleh
-            penghayatannya sendiri mengenai hubungan-hubungan pelik antara
-            laki-laki dan perempuan yang tinggal di sebuah ruangan kedap suara
-            yang bernama kasih sayang.
+            {book?.description || "-"}
           </p>
         </div>
 
         <div className="col-span-2 md:col-span-1 z-10 text-white p-2 md:p-6">
           <h3 className="text-lg font-semibold py-2">Publish Date</h3>
-          <p className="text-justify text-sm leading-normal">15 Juni 2015</p>
+          <p className="text-justify text-sm leading-normal">
+            {book?.published_date ? formatFullDate(book.published_date) : "-"}
+          </p>
           <h3 className="text-lg font-semibold py-2">Publisher</h3>
           <p className="text-justify text-sm leading-normal">
-            Gramedia Pustaka Utama
+            {book?.publisher || "-"}
           </p>
           <h3 className="text-lg font-semibold py-2">Language</h3>
-          <p className="text-justify text-sm leading-normal">Indonesia</p>
+          <p className="text-justify text-sm leading-normal">
+            {book?.language || "-"}
+          </p>
           <h3 className="text-lg font-semibold py-2">Pages</h3>
-          <p className="text-justify text-sm leading-normal">135</p>
+          <p className="text-justify text-sm leading-normal">
+            {book?.pages || "-"}
+          </p>
           <h3 className="text-lg font-semibold py-2">ISBN</h3>
-          <p className="text-justify text-sm leading-normal">9786029591545</p>
+          <p className="text-justify text-sm leading-normal">
+            {book?.isbn || "-"}
+          </p>
         </div>
       </div>
     </div>
