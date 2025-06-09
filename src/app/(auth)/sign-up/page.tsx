@@ -9,16 +9,21 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const SignIn = () => {
-  type FieldName = "usernameOrEmail" | "password";
+const SignOut = () => {
+  type FieldName = "fullname" | "username" | "email" | "password";
 
   const router = useRouter();
-  const login = useAuthStore((state) => state.login);
+  const signUp = useAuthStore((state) => state.register);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const signInSchema = yup.object().shape({
-    usernameOrEmail: yup.string().required("Username or email is required"),
+  const signUpSchema = yup.object().shape({
+    fullname: yup.string().required("Name is required"),
+    username: yup.string().required("Username is required"),
+    email: yup
+      .string()
+      .email("Email must be valid")
+      .required("Email is required"),
     password: yup
       .string()
       .required("Password is required")
@@ -32,7 +37,7 @@ const SignIn = () => {
     formState: { errors },
     getFieldState,
   } = useForm({
-    resolver: yupResolver(signInSchema),
+    resolver: yupResolver(signUpSchema),
     mode: "onChange",
   });
 
@@ -58,15 +63,16 @@ const SignIn = () => {
   };
 
   const onSubmit = async (data: {
-    usernameOrEmail: string;
+    fullname: string;
+    username: string;
+    email: string;
     password: string;
   }) => {
     setLoading(true);
     setError("");
 
     try {
-      await login(data);
-
+      await signUp(data);
       router.push("/");
     } catch (e: any) {
       console.error("Login failed:", e);
@@ -79,33 +85,47 @@ const SignIn = () => {
   return (
     <div className="relative w-100 h-full flex flex-col">
       <div className="flex-[0.3] pt-2">
-        <h1 className="text-3xl font-bold mb-4">Sign In</h1>
+        <h1 className="text-3xl font-bold mb-4">Sign Up</h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex-[0.7] items-center"
       >
         {error && <p className="text-red-500 text-sm">{error}</p>}
+        <div className="flex gap-2">
+          <div className="flex-1 py-1">
+            <h3 className="font-semibold text-lg py-2 px-3">name</h3>
+            <InputText
+              {...customRegister("fullname")}
+              name="fullname"
+              placeholder="name"
+              isValid={getValidationState("fullname")}
+              errorMessage={errors.fullname?.message}
+            />
+          </div>
+          <div className="flex-1 py-1">
+            <h3 className="font-semibold text-lg py-2 px-3">username</h3>
+            <InputText
+              {...customRegister("username")}
+              name="username"
+              placeholder="username"
+              isValid={getValidationState("username")}
+              errorMessage={errors.username?.message}
+            />
+          </div>
+        </div>
         <div className="py-1">
-          <h3 className="font-semibold text-lg py-2 px-3">Username or Email</h3>
+          <h3 className="font-semibold text-lg py-2 px-3">email</h3>
           <InputText
-            {...customRegister("usernameOrEmail")}
-            name="usernameOrEmail"
-            placeholder="username or email"
-            isValid={getValidationState("usernameOrEmail")}
-            errorMessage={errors.usernameOrEmail?.message}
+            {...customRegister("email")}
+            name="email"
+            placeholder="email"
+            isValid={getValidationState("email")}
+            errorMessage={errors.email?.message}
           />
         </div>
         <div className="py-1">
-          <div className="flex justify-between items-center">
-            <h3 className="font-semibold text-lg py-2 px-3">Password</h3>
-            <a
-              href="/forgot-password"
-              className="text-sm text-rose-500 hover:text-rose-800 px-3"
-            >
-              forgot password?
-            </a>
-          </div>
+          <h3 className="font-semibold text-lg py-2 px-3">password</h3>
           <InputText
             {...customRegister("password")}
             type="password"
@@ -123,19 +143,13 @@ const SignIn = () => {
               color="rose"
               type="submit"
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
-          <small className="text-center py-1">
-            new user?{" "}
-            <a href="/sign-up" className="text-rose-500 hover:text-rose-800">
-              sign up
-            </a>
-          </small>
         </div>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default SignOut;

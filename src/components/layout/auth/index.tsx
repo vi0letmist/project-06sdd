@@ -6,8 +6,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="relative grid-cols-2 flex w-100 h-screen">
-      <div className="col-span-1 bg-rose-100 w-1/2 flex items-end py-12 px-12">
+    <div className="relative grid-cols-1 lg:grid-cols-2 flex w-100 h-screen">
+      <div className="hidden lg:flex col-span-1 bg-rose-100 w-1/2 items-end py-12 px-12">
         <span className="text-sm">
           © {new Date().getFullYear()} jaffarjjati.
         </span>
