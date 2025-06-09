@@ -55,3 +55,36 @@ body {
   @apply bg-rose-500 !important;
   @apply text-white !important;
 }
+
+.react-datepicker__header .react-datepicker__header__dropdown {
+  @apply py-1 !important;
+}
+
+.react-datepicker__header
+  .react-datepicker__header__dropdown
+  .react-datepicker__month-dropdown-container
+  select,
+.react-datepicker__header
+  .react-datepicker__header__dropdown
+  .react-datepicker__year-dropdown-container
+  select {
+  @apply rounded !important;
+}
+
+.react-datepicker__header
+  .react-datepicker__header__dropdown
+  .react-datepicker__month-dropdown-container
+  select
+  option:hover,
+.react-datepicker__header
+  .react-datepicker__header__dropdown
+  .react-datepicker__year-dropdown-container
+  select
+  option:hover {
+  @apply bg-rose-500 !important;
+}
+
+.react-datepicker__month-select option:hover {
+  @apply bg-rose-300 !important;
+  @apply text-white !important;
+}

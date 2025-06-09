@@ -8,7 +8,7 @@ interface BookProps {
   id: string;
   title: string;
   author: string;
-  description: string;
+  description: string | null;
   imageSrc: string;
   lineClamp?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   size?: "sm" | "md" | "lg";
@@ -89,7 +89,7 @@ const CardBookWithDesc: React.FC<BookProps> = ({
   return (
     <div className={`cursor-pointer ${className}`} onClick={toDetail}>
       <Image
-        src={`/images/${imageSrc}`}
+        src={`${imageSrc}`}
         alt="background blur"
         width={300}
         height={200}
@@ -103,7 +103,7 @@ const CardBookWithDesc: React.FC<BookProps> = ({
       >
         <div className="col-span-3 md:col-span-1 flex items-end justify-start px-2 z-10">
           <Image
-            src={`/images/${imageSrc}`}
+            src={`${imageSrc}`}
             alt="book cover"
             width={150}
             height={200}

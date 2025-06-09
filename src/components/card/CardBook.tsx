@@ -31,7 +31,7 @@ const CardBook: React.FC<BookProps> = ({
   return (
     <div className={`cursor-pointer ${className}`} onClick={toDetail}>
       <Image
-        src={`/images/${imageSrc}`}
+        src={`${imageSrc}`}
         alt="background blur"
         width={300}
         height={200}
@@ -45,7 +45,7 @@ const CardBook: React.FC<BookProps> = ({
       >
         <div className="col-span-3 md:col-span-1 flex items-end justify-center px-2 z-10">
           <Image
-            src={`/images/${imageSrc}`}
+            src={`${imageSrc}`}
             alt="book cover"
             width={150}
             height={200}

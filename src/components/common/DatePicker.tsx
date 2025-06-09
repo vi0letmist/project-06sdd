@@ -64,6 +64,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
               setIsOpen(false);
             }}
             inline
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            dateFormat="MM/dd/yyyy"
             calendarClassName="bg-white !rounded-3xl overflow-auto"
           />
         </div>

@@ -1,82 +1,15 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
+import { useBookStore } from "@/store/book";
+import { formatYearOnly } from "@/lib/formatDate";
 import Button from "@/components/common/Button";
 import CardBook from "@/components/card/CardBook";
 
-const bookList = [
-  {
-    id: "1001",
-    title: "Hujan Bulan Juni",
-    author: "Sapardi Djoko Damono",
-    year: "2021",
-    genre: "Finction",
-    imageSrc: "Hujan-Bulan-Juni-Sebuah-Novel.jpg",
-  },
-  {
-    id: "1002",
-    title: "A Song of Ice and Fire: A Game of Thrones",
-    author: "George R. R. Martin",
-    year: "1996",
-    genre: "Finction",
-    imageSrc: "GOThcEng.jpg",
-  },
-  {
-    id: "1003",
-    title: "1984",
-    author: "George Orwell",
-    year: "1949",
-    genre: "Finction",
-    imageSrc: "1984 - george orwell2.jpg",
-  },
-  {
-    id: "1004",
-    title: "The Catcher in the Rye",
-    author: "J.D. Salinger",
-    year: "1951",
-    genre: "Finction",
-    imageSrc: "the catcher in the rye - jd salinger.jpg",
-  },
-];
-
-const collectionList = [
-  {
-    id: "1003",
-    title: "1984",
-    author: "George Orwell",
-    genre: "Dystopian fiction",
-    imageSrc: "1984 - george orwell2.jpg",
-  },
-  {
-    id: "1006",
-    title: "Brave New World",
-    author: "Aldous Huxley",
-    genre: "Dystopian Fiction",
-    imageSrc: "brave-new-world_aldous-huxley.jpg",
-  },
-  {
-    id: "1007",
-    title: "Fahrenhait 451",
-    author: "Ray Bradbury",
-    genre: "Dystopian Fiction",
-    imageSrc: "fahrenhait-451_ray-bradburry.jpg",
-  },
-  {
-    id: "1008",
-    title: "Animal Farm",
-    author: "George Orwell",
-    genre: "Political Satire",
-    imageSrc: "animal-farm_george orwell.jpg",
-  },
-  {
-    id: "1009",
-    title: "The Road",
-    author: "Cormac McCarthy",
-    genre: "Post-apocalyptic fiction",
-    imageSrc: "the-road_cormac-mcCarthy.jpg",
-  },
-];
-
 const BorrowRecords = () => {
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const bookStore = useBookStore();
+  const bookList = bookStore.bookList;
+
   const currentBorrowedRef = useRef<HTMLDivElement>(null!);
   const lastBorrowedRef = useRef<HTMLDivElement>(null!);
 
@@ -121,7 +54,18 @@ const BorrowRecords = () => {
     setTimeout(() => updateScrollButtons(sliderRef, setStart, setEnd), 300);
   };
 
+  const getBookList = () => {
+    const params = {
+      page: 1,
+      limit: 5,
+      title: "",
+    };
+    bookStore.getBookList(params);
+  };
+
   useEffect(() => {
+    getBookList();
+
     const handleScroll = (
       sliderRef: React.RefObject<HTMLDivElement>,
       setStart: (val: boolean) => void,
@@ -181,7 +125,7 @@ const BorrowRecords = () => {
             ref={currentBorrowedRef}
             className="flex overflow-x-auto overflow-y-hidden gap-4 py-4 items-center scroll-smooth scrollbar-hide"
           >
-            {bookList.map((book, index) => (
+            {bookList?.map((book, index) => (
               <div
                 key={index}
                 className="relative max-w-[250px] min-w-[250px] md:max-w-[500px] md:min-w-[500px] p-4 rounded-lg 
@@ -191,9 +135,9 @@ const BorrowRecords = () => {
                   id={book.id}
                   title={book.title}
                   author={book.author}
-                  year={book.year}
-                  genre={book.genre}
-                  imageSrc={book.imageSrc}
+                  year={formatYearOnly(book.published_date)}
+                  genre={book.genres?.[0]}
+                  imageSrc={BASE_URL + book.cover}
                 />
               </div>
             ))}
@@ -231,7 +175,7 @@ const BorrowRecords = () => {
             ref={lastBorrowedRef}
             className="flex overflow-x-auto overflow-y-hidden gap-4 py-4 items-center scroll-smooth scrollbar-hide"
           >
-            {bookList.map((book, index) => (
+            {bookList?.map((book, index) => (
               <div
                 key={index}
                 className="relative max-w-[250px] min-w-[250px] md:max-w-[500px] md:min-w-[500px] p-4 rounded-lg 
@@ -241,9 +185,9 @@ const BorrowRecords = () => {
                   id={book.id}
                   title={book.title}
                   author={book.author}
-                  year={book.year}
-                  genre={book.genre}
-                  imageSrc={book.imageSrc}
+                  year={formatYearOnly(book.published_date)}
+                  genre={book.genres?.[0]}
+                  imageSrc={BASE_URL + book.cover}
                 />
               </div>
             ))}
