@@ -6,6 +6,8 @@ import julian from "@/components/assets/images/julian.jpg";
 
 interface UserDropdownProps {
   className?: string;
+  logout?: () => void;
+  userData?: Record<string, any> | null;
 }
 
 const dropdownList = [
@@ -13,10 +15,13 @@ const dropdownList = [
   { name: "Logout", destination: "/logout", icon: "ArrowRightOnRectangleIcon" },
 ];
 
-const UserDropdown: React.FC<UserDropdownProps> = ({ className }) => {
+const UserDropdown: React.FC<UserDropdownProps> = ({
+  className,
+  logout,
+  userData,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const username = "Julian Casablancas";
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -35,6 +40,13 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ className }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const handleMenu = (menuName: string) => {
+    if (menuName === "Logout" && logout) {
+      logout();
+    }
+    setIsOpen(false);
+  };
+
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
@@ -42,12 +54,15 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ className }) => {
         className="px-4 py-2 bg-gray-200 rounded-3xl flex items-center space-x-2 whitespace-nowrap 
           overflow-hidden truncate hover:bg-rose-600 hover:text-white focus:ring-rose-300"
       >
-        <Image
+        {/* <Image
           src={julian}
           alt="dropdown icon"
           className="w-5 h-5 rounded-full"
-        />
-        <span className="text-sm hidden md:flex">{username}</span>
+        /> */}
+        <HeroIcons.UserCircleIcon className="h-5 w-5" />
+        <span className="text-sm hidden md:flex">
+          {userData?.fullname ?? "who are you?"}
+        </span>
         <HeroIcons.ChevronDownIcon
           className={`h-4 w-4 transition-transform duration-300 ${
             isOpen ? "rotate-180" : "rotate-0"
@@ -62,17 +77,28 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ className }) => {
               const IconComponent = (
                 HeroIcons as Record<string, React.FC<{ className?: string }>>
               )[menu.icon];
+
+              const isLogout = menu.name === "Logout";
+
               return (
                 <li
                   key={index}
                   className="px-4 py-2 hover:bg-rose-600 hover:text-white cursor-pointer rounded-3xl"
+                  onClick={() => handleMenu(menu.name)}
                 >
-                  <Link href={menu.destination} passHref>
+                  {isLogout ? (
                     <div className="flex items-center space-x-2">
                       {IconComponent && <IconComponent className="h-5 w-5" />}
                       <span>{menu.name}</span>
                     </div>
-                  </Link>
+                  ) : (
+                    <Link href={menu.destination} passHref>
+                      <div className="flex items-center space-x-2">
+                        {IconComponent && <IconComponent className="h-5 w-5" />}
+                        <span>{menu.name}</span>
+                      </div>
+                    </Link>
+                  )}
                 </li>
               );
             })}

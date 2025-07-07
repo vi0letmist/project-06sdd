@@ -5,7 +5,7 @@ import { useSidebar } from "@/context/SidebarContext";
 import { useBookStore } from "@/store/book";
 import Image from "next/image";
 import Button from "@/components/common/Button";
-import { formatFullDate } from "@/lib/formatDate";
+import { formatFullDate } from "@/utils/formatDate";
 
 interface BookDetailProps {
   id: string;

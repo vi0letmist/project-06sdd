@@ -1,9 +1,11 @@
 import { create } from "zustand";
-import axios from "axios";
 import Cookies from "js-cookie";
+import { decodeJWT } from "@/lib/decodeJWT";
+import axiosClient from "@/lib/axiosClient";
 
 interface AuthStore {
   token: string | null;
+  userData: Record<string, any> | null;
   loading: boolean;
   error: string | null;
   login: (credentials: {
@@ -16,36 +18,41 @@ interface AuthStore {
     email: string;
     password: string;
   }) => Promise<void>;
-  setToken: (token: string) => void;
+  setToken: (token: string, refresh: string) => void;
   logout: () => void;
 }
 
 const url = process.env.NEXT_PUBLIC_API_URL;
+const tokenFromStorage =
+  typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const hydratedUserData = tokenFromStorage ? decodeJWT(tokenFromStorage) : null;
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
+export const useAuthStore = create<AuthStore>((set, get) => ({
+  token: tokenFromStorage,
+  userData: hydratedUserData,
   loading: false,
   error: null,
 
-  setToken: (token) => {
-    localStorage.setItem("token", token);
-    Cookies.set("token", token);
-    set({ token });
+  setToken: (access, refresh) => {
+    const userData = decodeJWT(access);
+
+    localStorage.setItem("token", access);
+    Cookies.set("access", access, { expires: 1 / 24 });
+    Cookies.set("refresh", refresh, { expires: 7 });
+
+    set({ token: access, userData });
   },
 
   login: async ({ usernameOrEmail, password }) => {
     try {
-      const response = await axios.post(`${url}/login`, {
+      const response = await axiosClient.post(`${url}/login`, {
         usernameOrEmail,
         password,
       });
 
-      const { access } = response.data.data as AuthData;
+      const { access, refresh } = response.data.data as AuthData;
 
-      localStorage.setItem("token", access);
-      Cookies.set("token", access);
-
-      set({ token: access });
+      get().setToken(access, refresh);
     } catch (error: any) {
       const message = error?.response?.data?.message || "Login failed";
       throw new Error(message);
@@ -55,7 +62,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   register: async ({ fullname, username, email, password }) => {
     try {
       set({ loading: true, error: null });
-      await axios.post(`${url}/register`, {
+      await axiosClient.post(`${url}/register`, {
         fullname,
         username,
         email,
@@ -71,8 +78,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   logout: () => {
+    sessionStorage.setItem("logout", "true");
+    Cookies.remove("access");
+    Cookies.remove("refresh");
     localStorage.removeItem("token");
-    Cookies.remove("token");
-    set({ token: null });
+    set({ token: "", userData: null });
+    window.location.reload();
   },
 }));

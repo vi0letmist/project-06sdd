@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useBookStore } from "@/store/book";
 import { useGenreStore } from "@/store/genre";
+import { useRouter } from "next/navigation";
 import InputImage from "@/components/common/InputImage";
 import InputText from "@/components/common/InputText";
 import TextArea from "@/components/common/TextArea";
@@ -11,6 +12,7 @@ import Button from "@/components/common/Button";
 import MultiSelect from "@/components/common/MultiSelect";
 
 const CreateBook = () => {
+  const router = useRouter();
   const { createBook } = useBookStore();
   const genreStore = useGenreStore();
   const genreList = genreStore.genreList;
@@ -51,7 +53,13 @@ const CreateBook = () => {
     formData.genres.forEach((g) => form.append("genres", g));
     form.append("available_copies", formData.availableCopies);
 
-    await createBook(form);
+    try {
+      await createBook(form);
+
+      router.push("/books");
+    } catch (e) {
+      console.error("create book failed:", e);
+    }
   };
 
   const getGenreList = () => {

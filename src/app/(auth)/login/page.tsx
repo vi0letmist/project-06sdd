@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const SignIn = () => {
+const Login = () => {
   type FieldName = "usernameOrEmail" | "password";
 
   const router = useRouter();
@@ -17,7 +17,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const signInSchema = yup.object().shape({
+  const loginSchema = yup.object().shape({
     usernameOrEmail: yup.string().required("Username or email is required"),
     password: yup
       .string()
@@ -32,7 +32,7 @@ const SignIn = () => {
     formState: { errors },
     getFieldState,
   } = useForm({
-    resolver: yupResolver(signInSchema),
+    resolver: yupResolver(loginSchema),
     mode: "onChange",
   });
 
@@ -79,7 +79,7 @@ const SignIn = () => {
   return (
     <div className="relative w-100 h-full flex flex-col">
       <div className="flex-[0.3] pt-2">
-        <h1 className="text-3xl font-bold mb-4">Sign In</h1>
+        <h1 className="text-3xl font-bold mb-4">Login</h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -123,7 +123,7 @@ const SignIn = () => {
               color="rose"
               type="submit"
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Logging In..." : "Login"}
             </Button>
           </div>
           <small className="text-center py-1">
@@ -138,4 +138,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Login;
