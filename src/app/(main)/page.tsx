@@ -7,7 +7,7 @@ import CardBook from "@/components/card/CardBook";
 import CardBookCollection from "@/components/card/CardBookCollection";
 import CardBookMustRead from "@/components/card/CardBookMustRead";
 
-import { formatYearOnly } from "@/lib/formatDate";
+import { formatYearOnly } from "@/utils/formatDate";
 
 const collectionList = [
   {

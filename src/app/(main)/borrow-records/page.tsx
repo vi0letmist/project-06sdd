@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import { useBookStore } from "@/store/book";
-import { formatYearOnly } from "@/lib/formatDate";
+import { formatYearOnly } from "@/utils/formatDate";
 import Button from "@/components/common/Button";
 import CardBook from "@/components/card/CardBook";
 

@@ -1,12 +1,28 @@
 import { useState } from "react";
 import { useSidebar } from "@/context/SidebarContext";
+import { useAuthStore } from "@/store/auth";
+import { useRouter } from "next/navigation";
+import { useHasHydrated } from "@/hooks/useHasHydrated";
 import InputText from "@/components/common/InputText";
 import Button from "@/components/common/Button";
 import UserDropdown from "./UserDropdown";
 
 const Header = () => {
+  const hasHydrated = useHasHydrated();
   const [search, setValue] = useState("");
   const { isSidebarOpen } = useSidebar();
+  const userData = useAuthStore((state) => state.userData);
+  const logout = useAuthStore((state) => state.logout);
+  const router = useRouter();
+
+  if (!hasHydrated) return null;
+
+  const login = () => {
+    router.push("/login");
+  };
+  const signUp = () => {
+    router.push("/sign-up");
+  };
 
   const handleNotification = () => {};
 
@@ -31,7 +47,22 @@ const Header = () => {
         <div
           className={`${isSidebarOpen ? "sm:col-span-2 sm:flex hidden" : "flex col-span-1"} md:col-span-1 flex justify-end items-center px-2`}
         >
-          <UserDropdown className="pr-4" />
+          {userData ? (
+            <UserDropdown
+              logout={logout}
+              userData={userData}
+              className="pr-4"
+            />
+          ) : (
+            <div className="flex gap-1 mr-1">
+              <Button className="rounded-3xl" color="gray" onClick={login}>
+                Login
+              </Button>
+              <Button className="rounded-3xl" color="rose" onClick={signUp}>
+                Sign Up
+              </Button>
+            </div>
+          )}
           <Button
             className={`rounded-3xl z-50`}
             icon="BellIcon"

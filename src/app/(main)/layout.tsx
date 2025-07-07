@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import Layout from "@/components/layout/main";
 import { SidebarProvider } from "@/context/SidebarContext";
 import { Roboto } from "next/font/google";
+import TokenRefresher from "@/components/TokenRefresher";
 
 export const metadata = {
   title: "project-06sdd",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${roboto.variable}`}>
       <body>
         <SidebarProvider>
+          <TokenRefresher />
           <Layout>{children}</Layout>
         </SidebarProvider>
       </body>
